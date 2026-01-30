@@ -1,0 +1,152 @@
+.bmrInfo {
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.2) 0%,
+        rgba(0, 0, 0, 0.8) 100%
+    ),
+    url("../../components/titan_background.jpeg");
+    background-size: cover;
+    background-position: center;
+    color: white;
+
+    .content-wrapper {
+        display: flex;
+        padding-top: 80px;
+        gap: 50px;
+        margin: 0 50px;
+    }
+
+    .left-column {
+        flex: 0 0 400px;
+
+        .sectionTitle {
+            color: #ebc034;
+            font-size: 32px;
+            font-weight: bold;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin-bottom: 30px;
+        }
+
+        .inputContainer {
+            background: rgba(20, 20, 20, 0.95);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+
+            .input-group {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 15px;
+
+                label {
+                    color: #ebc034;
+                    font-size: 16px;
+                }
+
+                .inputBox {
+                    width: 150px;
+                    padding: 10px;
+                    border: 2px solid #ebc034;
+                    border-radius: 8px;
+                    background: rgba(255, 255, 255, 0.1);
+                    color: white;
+                    font-size: 16px;
+
+                    &:focus {
+                        outline: none;
+                        border-color: #ff9d00;
+                        box-shadow: 0 0 10px rgba(235, 192, 52, 0.3);
+                    }
+                }
+            }
+        }
+
+        .selectContainer {
+            background: rgba(20, 20, 20, 0.95);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+
+            .MuiFormControl-root {
+                .MuiOutlinedInput-root {
+                    color: white;
+                    
+                    fieldset {
+                        border-color: #ebc034;
+                    }
+
+                    &:hover fieldset {
+                        border-color: #ff9d00;
+                    }
+
+                    &.Mui-focused fieldset {
+                        border-color: #ff9d00;
+                    }
+                }
+
+                .MuiMenuItem-root {
+                    color: #000000;
+                }
+            }
+
+            .calculate-button {
+                &:hover {
+                    background: linear-gradient(45deg, #ff9d00, #ebc034);
+                    transform: translateY(-2px);
+                }
+            }
+        }
+    }
+
+    .right-column {
+        flex: 1;
+        display: flex;
+        align-items: flex-start;
+        padding-top: 60px;
+
+        .results {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+
+            .resultBox {
+                background: rgba(20, 20, 20, 0.95);
+                padding: 25px;
+                border-radius: 15px;
+                margin-bottom: 20px;
+                border: 2px solid #ebc034;
+                text-align: center;
+
+                h3 {
+                    color: #ebc034;
+                    font-size: 24px;
+                    margin-bottom: 15px;
+                }
+
+                p {
+                    color: white;
+                    font-size: 32px;
+                    font-weight: bold;
+                    margin-bottom: 15px;
+                }
+
+                .info {
+                    color: #bbbbbb;
+                    font-size: 14px;
+                    line-height: 1.4;
+                }
+
+                &:last-child {
+                    margin-bottom: 0;
+                }
+            }
+        }
+    }
+}
