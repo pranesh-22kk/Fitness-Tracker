@@ -1,0 +1,163 @@
+// Styling for page to personal info page 
+.personalInfo {
+    width: 100%;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0a0015 0%, #1a0033 50%, #0a0015 100%);
+    position: relative;
+    color: white;
+    overflow-x: hidden;
+
+    .personalInfoForm {
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+
+        .container {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+
+            .successMessage {
+                margin-top: -10px; // to center the sign in box
+                margin-bottom: 10px;
+            }
+
+            form {
+                width: 500px;
+                padding: 30px;
+                border-radius: 20px;
+                background: rgba(255, 255, 255, 0.05);
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+
+                label {
+                    width: 500px;
+                    // margin-top: 5px;
+
+                    .infoType {
+                        width: 500px;
+                        text-align: center;
+                    }
+
+                    input {
+                        margin-left: 100px;
+                        width: 200px;
+                    }
+
+                    .formButton {
+                        height: 40px;
+                        border-radius: 5px;
+                        background-color: goldenrod;
+                        color: white;
+                        font-size: 18px;
+                        font-weight: 500;
+                        cursor: pointer;
+                        border: none;
+                        height: 25px;
+                        width: 100px;
+                    }
+                }
+
+                .backButton {
+                    cursor: pointer;
+                }
+
+                .button2 {
+                    cursor: pointer;
+                }
+
+                // .message {
+                //     margin-bottom: 5px;
+                //     align-items: center;
+                // }
+
+                button {
+                    height: 40px;
+                    border-radius: 5px;
+                    background-color: goldenrod;
+                    color: white;
+                    font-size: 18px;
+                    font-weight: 500;
+                    // cursor: pointer;
+                    border: none;
+                    width: 500px;
+                    margin: 5px;
+                    align-items: center;
+                    justify-content: center;
+                }
+
+                .infoButton {
+                    height: 40px;
+                    border-radius: 5px;
+                    background-color: white;
+                    color: black;
+                    font-size: 18px;
+                    font-weight: 500;
+                    // cursor: pointer;
+                    border: none;
+                    
+
+                    span {
+                        font-weight: 400;
+                        color: black;
+                    }
+                }
+
+
+                .link {
+                    margin-top: 5px;
+
+                    button {
+                        width: 500px;
+                        color: black;
+                        background-color: white;
+                    }
+
+                    .button2 {
+                        width: 500px;
+                        color: white;
+                        background-color: goldenrod;
+                    }
+                }
+            }
+
+            span {
+                color: lightgray;
+                text-align: center;
+            }
+
+            small {
+                text-align: center;
+            }
+
+            b {
+                color: white;
+                cursor: pointer;
+            }
+
+            h1 {
+                text-align: center;
+            }
+
+            .errorMessage {
+                text-align: center;
+                margin-top: 5px;
+                p {
+                    font-size: 14px;
+                    // color: red;
+                }
+            }
+        }
+    }
+}

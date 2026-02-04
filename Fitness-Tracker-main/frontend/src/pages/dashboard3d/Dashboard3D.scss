@@ -1,0 +1,22 @@
+.dashboard-3d {
+  font-family: 'Public Sans', sans-serif;
+  
+  .stat-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  .MuiCard-root {
+    border-radius: 16px;
+  }
+
+  .MuiButton-root {
+    border-radius: 12px;
+    text-transform: none;
+    padding: 10px 24px;
+  }
+}

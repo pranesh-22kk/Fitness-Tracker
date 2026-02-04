@@ -1,0 +1,211 @@
+.exercise-tracker {
+  width: 100%;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0a0015 0%, #1a0033 50%, #0a0015 100%);
+  position: relative;
+  overflow-x: hidden;
+  color: white;
+
+  .canvas-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 0;
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  .content-container {
+    position: relative;
+    z-index: 1;
+    padding: 100px 40px 60px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .header-section {
+    text-align: center;
+    margin-bottom: 50px;
+
+    .page-title {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 900;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .page-subtitle {
+      font-size: 1.2rem;
+      color: rgba(255, 255, 255, 0.7);
+    }
+  }
+
+  .stat-card {
+    background: rgba(255, 255, 255, 0.05) !important;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px !important;
+    padding: 10px;
+    transition: all 0.3s ease;
+
+    &:hover {
+      transform: translateY(-5px);
+      background: rgba(255, 255, 255, 0.08) !important;
+      box-shadow: 0 10px 40px rgba(102, 126, 234, 0.3);
+    }
+
+    .card-title {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 1rem;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .stat-value {
+      font-weight: 900;
+      font-size: 2.5rem;
+    }
+  }
+
+  .input-card,
+  .chart-card,
+  .history-card {
+    background: rgba(255, 255, 255, 0.05) !important;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px !important;
+    height: 100%;
+  }
+
+  .input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 20px;
+
+    .input-field {
+      .MuiOutlinedInput-root {
+        color: white;
+        border-radius: 12px;
+
+        fieldset {
+          border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        &:hover fieldset {
+          border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        &.Mui-focused fieldset {
+          border-color: #667eea;
+        }
+      }
+
+      .MuiInputLabel-root {
+        color: rgba(255, 255, 255, 0.7);
+
+        &.Mui-focused {
+          color: #667eea;
+        }
+      }
+
+      .MuiSelect-icon {
+        color: rgba(255, 255, 255, 0.7);
+      }
+    }
+  }
+
+  .add-button {
+    padding: 15px !important;
+    border-radius: 12px !important;
+    font-weight: 600 !important;
+    font-size: 1rem !important;
+    text-transform: none !important;
+    box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4) !important;
+    transition: all 0.3s ease !important;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 30px rgba(102, 126, 234, 0.6) !important;
+    }
+  }
+
+  .history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-height: 500px;
+    overflow-y: auto;
+    padding-right: 10px;
+
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: rgba(102, 126, 234, 0.5);
+      border-radius: 10px;
+
+      &:hover {
+        background: rgba(102, 126, 234, 0.7);
+      }
+    }
+
+    .history-item {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 15px;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.06);
+        transform: translateX(5px);
+      }
+
+      &.exercise-item {
+        h6 {
+          color: white;
+          font-weight: 600;
+          margin-bottom: 8px;
+        }
+
+        .MuiChip-root {
+          background: rgba(102, 126, 234, 0.2);
+          color: white;
+          border: 1px solid rgba(102, 126, 234, 0.3);
+        }
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    .content-container {
+      padding: 100px 20px 40px;
+    }
+
+    .header-section .page-title {
+      font-size: 2rem;
+    }
+
+    .stat-value {
+      font-size: 2rem !important;
+    }
+  }
+}

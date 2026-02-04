@@ -1,0 +1,19 @@
+.progress-tracker {
+  font-family: 'Public Sans', sans-serif;
+
+  .MuiCard-root {
+    border-radius: 16px;
+  }
+
+  .MuiButton-root {
+    border-radius: 12px;
+    text-transform: none;
+    font-weight: bold;
+  }
+
+  .MuiTextField-root {
+    .MuiOutlinedInput-root {
+      border-radius: 12px;
+    }
+  }
+}
