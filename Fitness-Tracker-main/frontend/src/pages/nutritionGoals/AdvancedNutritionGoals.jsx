@@ -20,12 +20,9 @@ import {
   Container,
   Grid,
   Paper,
-  Chip,
   Slider,
   ToggleButton,
   ToggleButtonGroup,
-  Card,
-  CardContent,
   LinearProgress,
   Tabs,
   Tab
@@ -193,6 +190,7 @@ const AdvancedNutritionGoals = () => {
 
   useEffect(() => {
     loadNutritionGoals();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const loadNutritionGoals = async () => {

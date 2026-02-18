@@ -7,7 +7,6 @@ import {
   Float,
   Sphere,
   Torus,
-  Box,
   MeshDistortMaterial,
   PerspectiveCamera,
   Sparkles,
@@ -26,14 +25,9 @@ import {
   Chip,
   IconButton,
   TextField,
-  Button,
   Tabs,
   Tab,
-  Divider,
-  CircularProgress,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails
+  CircularProgress
 } from "@mui/material";
 import { AuthContext } from "../../utils/authentication/auth-context";
 import axios from "axios";
@@ -49,7 +43,6 @@ import WarningIcon from "@mui/icons-material/Warning";
 import EditIcon from "@mui/icons-material/Edit";
 import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Cancel";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import VitaminsIcon from "@mui/icons-material/Medication";
 import MineralIcon from "@mui/icons-material/Diamond";
 import "./advancedNutritionDetails.scss";
@@ -184,6 +177,7 @@ const AdvancedNutritionDetails = () => {
 
   useEffect(() => {
     getNutritionInfo();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getNutritionInfo = async () => {

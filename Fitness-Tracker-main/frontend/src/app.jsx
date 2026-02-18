@@ -1,11 +1,8 @@
 /* Root component of react app */
 import "./app.scss"
-import Home from "./pages/home/home";
 import AdvancedHome from "./pages/home/AdvancedHome";
 import Login from "./pages/login/login";
-import Register from "./pages/register/register";
 import AdvancedRegister from "./pages/register/AdvancedRegister";
-import Preferences from "./pages/preferences/preferences";
 import AdvancedPreferences from "./pages/preferences/AdvancedPreferences";
 import MealTracker from "./pages/mealTracker/mealTracker";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
@@ -23,15 +20,12 @@ import Menu from "./pages/menu/menu";
 import MealTrackerItem from "./pages/mealTrackerItem/mealTrackerItem";
 import SavedMenuItems from "./pages/savedMenuItems/savedMenuItems";
 import PopularMenuItems from "./pages/popular/popular";
-import LowLevelNutrition from "./pages/lowLevelNutrition/lowLevelNutrition";
 import AdvancedNutritionDetails from "./pages/lowLevelNutrition/AdvancedNutritionDetails";
 import RecommendedMenuItems from "./pages/recommendedMenuItems/recommendedMenuItems";
 import BmrInfo from "./pages/bmrInfo/bmrInfo";
 import AdvancedBmrCalculator from "./pages/bmrInfo/AdvancedBmrCalculator";
 import AdvancedNutritionGoals from "./pages/nutritionGoals/AdvancedNutritionGoals";
-import Dashboard3D from "./pages/dashboard3d/Dashboard3D";
 import AdvancedDashboard from "./pages/dashboard3d/AdvancedDashboard";
-import WorkoutPlanner from "./pages/workoutPlanner/WorkoutPlanner";
 import AdvancedWorkout from "./pages/workoutPlanner/AdvancedWorkout";
 import Achievements from "./pages/achievements/Achievements";
 import ProgressTracker from "./pages/progressTracker/ProgressTracker";

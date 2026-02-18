@@ -21,7 +21,11 @@ import {
   FormControl,
   InputLabel,
   Divider,
-  TextField
+  TextField,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions
 } from "@mui/material";
 import { PieChart } from "@mui/x-charts/PieChart";
 import { FiCoffee, FiSun, FiMoon, FiPlus } from 'react-icons/fi';
@@ -93,6 +97,17 @@ const MealTracker = () => {
   const [foodItems, setFoodItems] = useState([]);
   const [mealFilter, setMealFilter] = useState('all');
   const [dateFilter, setDateFilter] = useState(new Date().toISOString().split('T')[0]);
+  const [openDialog, setOpenDialog] = useState(false);
+  
+  // Form state variables
+  const [foodName, setFoodName] = useState('');
+  const [calories, setCalories] = useState('');
+  const [protein, setProtein] = useState('');
+  const [fat, setFat] = useState('');
+  const [carbohydrates, setCarbs] = useState('');
+  const [servings, setServings] = useState('');
+  const [servingSize, setServingSize] = useState('');
+  const [mealType, setMealType] = useState('breakfast');
 
   useEffect(() => {
     if (location.state?.refresh) {
@@ -110,6 +125,39 @@ const MealTracker = () => {
       setFoodItems(res.data || []);
     } catch (error) {
       console.error('Error fetching food items:', error);
+    }
+  };
+
+  const handleAddFood = async () => {
+    if (!foodName || !calories || !protein || !carbohydrates || !servings || !servingSize || !mealType) {
+      alert('Please fill in all required fields');
+      return;
+    }
+
+    try {
+      const currentDate = new Date().toISOString();
+      console.log('Adding food:', { foodName, calories, fat, protein, carbohydrates, servings, servingSize, mealType, date: currentDate });
+      const res = await axios.put(
+        `users/addFood/${user._id}`,
+        { foodName, calories, fat, protein, carbohydrates, servings, servingSize, mealType, date: currentDate },
+        { headers: { token: `Bearer ${user.accessToken}` } }
+      );
+      console.log('Add food response:', res.data);
+
+      // Clear form
+      setFoodName('');
+      setCalories('');
+      setProtein('');
+      setFat('');
+      setCarbs('');
+      setServings('');
+      setServingSize('');
+      setMealType('breakfast');
+      
+      alert('Food item added successfully!');
+    } catch (error) {
+      console.error('Error adding food:', error);
+      alert('Error adding food: ' + (error.response?.data?.error || error.message));
     }
   };
 
@@ -141,7 +189,12 @@ const MealTracker = () => {
   };
 
   const filteredItems = foodItems.filter(item => {
-    const itemDate = new Date(item.date).toISOString().split('T')[0];
+    // Validate date exists and is valid
+    if (!item.date) return false;
+    const date = new Date(item.date);
+    if (isNaN(date.getTime())) return false;
+    
+    const itemDate = date.toISOString().split('T')[0];
     const matchesDate = itemDate === dateFilter;
     const matchesMeal = mealFilter === 'all' || item.mealType?.toLowerCase() === mealFilter.toLowerCase();
     return matchesDate && matchesMeal;
@@ -310,14 +363,14 @@ const MealTracker = () => {
 
         {/* Add Meal Button */}
         <Box sx={{ mb: 3 }}>
-          <Link to={ROUTES.MENU + "/Earhart"} style={{ textDecoration: 'none' }}>
-            <Button
-              variant="contained"
-              startIcon={<FiPlus />}
-              className="add-button"
-              sx={{
-                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                padding: '12px 30px',
+          <Button
+            variant="contained"
+            startIcon={<FiPlus />}
+            className="add-button"
+            onClick={() => setOpenDialog(true)}
+            sx={{
+              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+              padding: '12px 30px',
                 borderRadius: '12px',
                 fontSize: '1rem',
                 fontWeight: 600,
@@ -331,7 +384,6 @@ const MealTracker = () => {
             >
               Add Food Item
             </Button>
-          </Link>
         </Box>
 
         {/* Meal Groups */}
@@ -404,6 +456,189 @@ const MealTracker = () => {
             </CardContent>
           </Card>
         )}
+
+        {/* Add Food Dialog */}
+        <Dialog 
+          open={openDialog} 
+          onClose={() => setOpenDialog(false)}
+          maxWidth="md"
+          fullWidth
+          PaperProps={{
+            sx: {
+              background: 'rgba(30, 20, 60, 0.95)',
+              backdropFilter: 'blur(20px)',
+              border: '1px solid rgba(255,255,255,0.1)',
+              color: 'white'
+            }
+          }}
+        >
+          <DialogTitle sx={{ borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+            Add Food Item
+          </DialogTitle>
+          <DialogContent sx={{ mt: 2 }}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  label="Food Name"
+                  value={foodName}
+                  onChange={(e) => setFoodName(e.target.value)}
+                  fullWidth
+                  sx={{
+                    '.MuiOutlinedInput-root': {
+                      color: 'white',
+                      '& fieldset': { borderColor: 'rgba(255,255,255,0.2)' },
+                      '&:hover fieldset': { borderColor: 'rgba(255,255,255,0.3)' }
+                    },
+                    '.MuiInputLabel-root': { color: 'rgba(255,255,255,0.7)' }
+                  }}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  label="Calories"
+                  type="number"
+                  value={calories}
+                  onChange={(e) => setCalories(e.target.value)}
+                  fullWidth
+                  sx={{
+                    '.MuiOutlinedInput-root': {
+                      color: 'white',
+                      '& fieldset': { borderColor: 'rgba(255,255,255,0.2)' },
+                      '&:hover fieldset': { borderColor: 'rgba(255,255,255,0.3)' }
+                    },
+                    '.MuiInputLabel-root': { color: 'rgba(255,255,255,0.7)' }
+                  }}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  label="Protein (g)"
+                  type="number"
+                  value={protein}
+                  onChange={(e) => setProtein(e.target.value)}
+                  fullWidth
+                  sx={{
+                    '.MuiOutlinedInput-root': {
+                      color: 'white',
+                      '& fieldset': { borderColor: 'rgba(255,255,255,0.2)' },
+                      '&:hover fieldset': { borderColor: 'rgba(255,255,255,0.3)' }
+                    },
+                    '.MuiInputLabel-root': { color: 'rgba(255,255,255,0.7)' }
+                  }}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  label="Carbohydrates (g)"
+                  type="number"
+                  value={carbohydrates}
+                  onChange={(e) => setCarbs(e.target.value)}
+                  fullWidth
+                  sx={{
+                    '.MuiOutlinedInput-root': {
+                      color: 'white',
+                      '& fieldset': { borderColor: 'rgba(255,255,255,0.2)' },
+                      '&:hover fieldset': { borderColor: 'rgba(255,255,255,0.3)' }
+                    },
+                    '.MuiInputLabel-root': { color: 'rgba(255,255,255,0.7)' }
+                  }}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  label="Fat (g)"
+                  type="number"
+                  value={fat}
+                  onChange={(e) => setFat(e.target.value)}
+                  fullWidth
+                  sx={{
+                    '.MuiOutlinedInput-root': {
+                      color: 'white',
+                      '& fieldset': { borderColor: 'rgba(255,255,255,0.2)' },
+                      '&:hover fieldset': { borderColor: 'rgba(255,255,255,0.3)' }
+                    },
+                    '.MuiInputLabel-root': { color: 'rgba(255,255,255,0.7)' }
+                  }}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  label="Servings"
+                  type="number"
+                  value={servings}
+                  onChange={(e) => setServings(e.target.value)}
+                  fullWidth
+                  sx={{
+                    '.MuiOutlinedInput-root': {
+                      color: 'white',
+                      '& fieldset': { borderColor: 'rgba(255,255,255,0.2)' },
+                      '&:hover fieldset': { borderColor: 'rgba(255,255,255,0.3)' }
+                    },
+                    '.MuiInputLabel-root': { color: 'rgba(255,255,255,0.7)' }
+                  }}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  label="Serving Size"
+                  value={servingSize}
+                  onChange={(e) => setServingSize(e.target.value)}
+                  fullWidth
+                  sx={{
+                    '.MuiOutlinedInput-root': {
+                      color: 'white',
+                      '& fieldset': { borderColor: 'rgba(255,255,255,0.2)' },
+                      '&:hover fieldset': { borderColor: 'rgba(255,255,255,0.3)' }
+                    },
+                    '.MuiInputLabel-root': { color: 'rgba(255,255,255,0.7)' }
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <FormControl fullWidth>
+                  <InputLabel sx={{ color: 'rgba(255,255,255,0.7)' }}>Meal Type</InputLabel>
+                  <Select
+                    value={mealType}
+                    onChange={(e) => setMealType(e.target.value)}
+                    label="Meal Type"
+                    sx={{
+                      color: 'white',
+                      '.MuiOutlinedInput-notchedOutline': { borderColor: 'rgba(255,255,255,0.2)' },
+                      '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: 'rgba(255,255,255,0.3)' },
+                      '.MuiSvgIcon-root': { color: 'rgba(255,255,255,0.7)' }
+                    }}
+                  >
+                    <MenuItem value="breakfast">Breakfast</MenuItem>
+                    <MenuItem value="lunch">Lunch</MenuItem>
+                    <MenuItem value="dinner">Dinner</MenuItem>
+                    <MenuItem value="snack">Snack</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+            </Grid>
+          </DialogContent>
+          <DialogActions sx={{ borderTop: '1px solid rgba(255,255,255,0.1)', p: 2 }}>
+            <Button 
+              onClick={() => setOpenDialog(false)}
+              sx={{ color: 'rgba(255,255,255,0.7)' }}
+            >
+              Cancel
+            </Button>
+            <Button 
+              onClick={async () => {
+                await handleAddFood();
+                getFoodItems();
+                setOpenDialog(false);
+              }}
+              variant="contained"
+              sx={{ 
+                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+              }}
+            >
+              Add Food
+            </Button>
+          </DialogActions>
+        </Dialog>
       </div>
     </div>
   );

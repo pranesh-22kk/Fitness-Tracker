@@ -10,9 +10,7 @@ import {
   PerspectiveCamera,
   Environment,
   Torus,
-  RoundedBox,
-  Sparkles,
-  Text
+  Sparkles
 } from "@react-three/drei";
 import { motion, AnimatePresence } from "framer-motion";
 import {

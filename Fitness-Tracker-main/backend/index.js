@@ -36,8 +36,21 @@ mongoose
     .catch(err => console.log(err));
 
 /* Enable CORS for frontend communication */
+const allowedOrigins = process.env.NODE_ENV === 'production'
+    ? [process.env.FRONTEND_URL || 'https://*.vercel.app']
+    : ["http://localhost:3000", "http://localhost:3001"];
+
 app.use(cors({
-    origin: ["http://localhost:3000", "http://localhost:3001"],
+    origin: function(origin, callback) {
+        // Allow requests with no origin (mobile apps, curl, etc)
+        if (!origin) return callback(null, true);
+        
+        if (allowedOrigins.indexOf(origin) !== -1 || allowedOrigins.some(allowed => allowed.includes('*'))) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     allowedHeaders: ["Content-Type", "Authorization", "token"]
@@ -59,39 +72,46 @@ app.use("/api/stats", statsRoute);
 app.use("/api/progress", progressRoute);
 
 /* Have backend server listen on port 8000 on the local host */
-const PORT = 8000;
-app.listen(PORT, async () => {
-    console.log(`Backend is running. Listening on port ${PORT}`);
-    console.log("Attempting to connect to MongoDB.");
+const PORT = process.env.PORT || 8000;
 
-    /* Uncomment this to immediately parse new dining data on server startup */
-    // try {
-    //     await axios.post('http://localhost:8000/api/menuInfo/load');
-    // } catch (error) {
-    //     console.log("ERROR PARSING DINING DATA ON STARTUP: " + error);
-    // }
+// Only start server if not in serverless environment (Vercel)
+if (process.env.NODE_ENV !== 'production' || !process.env.VERCEL) {
+    app.listen(PORT, async () => {
+        console.log(`Backend is running. Listening on port ${PORT}`);
+        console.log("Attempting to connect to MongoDB.");
 
-    /* Uncomment this to immediately reset all users' food trackers on server startup */
-    // try {
-    //     await axios.delete('http://localhost:8000/api/users/resetTrackers');
-    // } catch (error) {
-    //     console.log("ERROR RESETTING TRACKER AT MIDNIGHT: " + error);
-    // }
-});
+        /* Uncomment this to immediately parse new dining data on server startup */
+        // try {
+        //     await axios.post('http://localhost:8000/api/menuInfo/load');
+        // } catch (error) {
+        //     console.log("ERROR PARSING DINING DATA ON STARTUP: " + error);
+        // }
 
-/* Schedule jobs to run every midnight scheduler uses CRON formatting: https://crontab.guru/every-night-at-midnight */
-schedule.scheduleJob('0 0 * * *', async () => {
-    /* Parse dining data everyday at 12:00 am */
-    try {
-        await axios.post('http://localhost:8000/api/menuInfo/load');
-    } catch (error) {
-        console.log("ERROR PARSING DINING DATA AT MIDNIGHT: " + error);
-    }
-    
-    /* Reset user's trackers everyday at 12 am */
-    try {
-        await axios.delete('http://localhost:8000/api/users/resetTrackers');
-    } catch (error) {
-        console.log("ERROR RESETTING TRACKER AT MIDNIGHT: " + error);
-    }
-});
+        /* Uncomment this to immediately reset all users' food trackers on server startup */
+        // try {
+        //     await axios.delete('http://localhost:8000/api/users/resetTrackers');
+        // } catch (error) {
+        //     console.log("ERROR RESETTING TRACKER AT MIDNIGHT: " + error);
+        // }
+    });
+
+    /* Schedule jobs to run every midnight scheduler uses CRON formatting: https://crontab.guru/every-night-at-midnight */
+    schedule.scheduleJob('0 0 * * *', async () => {
+        /* Parse dining data everyday at 12:00 am */
+        try {
+            await axios.post('http://localhost:8000/api/menuInfo/load');
+        } catch (error) {
+            console.log("ERROR PARSING DINING DATA AT MIDNIGHT: " + error);
+        }
+        
+        /* Reset user's trackers everyday at 12 am */
+        try {
+            await axios.delete('http://localhost:8000/api/users/resetTrackers');
+        } catch (error) {
+            console.log("ERROR RESETTING TRACKER AT MIDNIGHT: " + error);
+        }
+    });
+}
+
+// Export for Vercel serverless functions
+module.exports = app;
