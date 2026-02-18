@@ -71,7 +71,6 @@ function Scene3D({ activeTab }) {
   
   return (
     <>
-      <color attach="background" args={['rgba(10, 0, 21, 0)']} />
       <ambientLight intensity={0.3} />
       <pointLight position={[5, 5, 5]} intensity={1.5} />
       <pointLight position={[-5, -5, -5]} intensity={1} />
@@ -165,67 +164,103 @@ const OtherHealthTracker = () => {
   }, [weightLog, activity]);
 
   const handleAddWeight = async () => {
-    if (!weightAmt || !weightDate) return;
+    if (!weightAmt || !weightDate) {
+      alert('Please fill in both weight and date fields');
+      return;
+    }
     try {
+      console.log('Adding weight:', { weight: weightAmt, date: weightDate });
       const res = await axios.put(
         `users/weight/${userId}`,
         { weight: weightAmt, date: weightDate },
         { headers: { token: `Bearer ${user.accessToken}` } }
       );
-      setWeightLog(res.data.weightLog.sort(compare));
-      setWeightAmt('');
-      setWeightDate('');
+      console.log('Weight response:', res.data);
+      if (res.data && res.data.weightLog) {
+        setWeightLog(res.data.weightLog.sort(compare));
+        setWeightAmt('');
+        setWeightDate('');
+        alert('Weight entry added successfully!');
+      }
     } catch (error) {
-      console.error(error);
+      console.error('Error adding weight:', error);
+      alert('Error adding weight entry: ' + (error.response?.data?.error || error.message));
     }
   };
 
   const handleAddSleep = async () => {
-    if (!sleepLength || !sleepDate) return;
+    if (!sleepLength || !sleepDate) {
+      alert('Please fill in both sleep hours and date fields');
+      return;
+    }
     try {
+      console.log('Adding sleep:', { length: sleepLength, date: sleepDate });
       const res = await axios.put(
         `users/sleep/${userId}`,
         { length: sleepLength, date: sleepDate },
         { headers: { token: `Bearer ${user.accessToken}` } }
       );
-      setSleepLog(res.data.sleepLog.sort(compare));
-      setSleepLength('');
-      setSleepDate('');
+      console.log('Sleep response:', res.data);
+      if (res.data && res.data.sleepLog) {
+        setSleepLog(res.data.sleepLog.sort(compare));
+        setSleepLength('');
+        setSleepDate('');
+        alert('Sleep entry added successfully!');
+      }
     } catch (error) {
-      console.error(error);
+      console.error('Error adding sleep:', error);
+      alert('Error adding sleep entry: ' + (error.response?.data?.error || error.message));
     }
   };
 
   const handleAddWater = async () => {
-    if (!waterIntake || !waterDate) return;
+    if (!waterIntake || !waterDate) {
+      alert('Please fill in both water intake and date fields');
+      return;
+    }
     try {
+      console.log('Adding water:', { intake: waterIntake, date: waterDate });
       const res = await axios.put(
         `users/water/${userId}`,
         { intake: waterIntake, date: waterDate },
         { headers: { token: `Bearer ${user.accessToken}` } }
       );
-      setWaterLog(res.data.waterLog.sort(compare));
-      setWaterIntake('');
-      setWaterDate('');
+      console.log('Water response:', res.data);
+      if (res.data && res.data.waterLog) {
+        setWaterLog(res.data.waterLog.sort(compare));
+        setWaterIntake('');
+        setWaterDate('');
+        alert('Water entry added successfully!');
+      }
     } catch (error) {
-      console.error(error);
+      console.error('Error adding water:', error);
+      alert('Error adding water entry: ' + (error.response?.data?.error || error.message));
     }
   };
 
   const handleAddSupplement = async () => {
-    if (!suppName || !suppAmt || !suppDate) return;
+    if (!suppName || !suppAmt || !suppDate) {
+      alert('Please fill in all supplement fields');
+      return;
+    }
     try {
+      console.log('Adding supplement:', { name: suppName, amount: suppAmt, date: suppDate });
       const res = await axios.put(
         `users/supplement/${userId}`,
         { name: suppName, amount: suppAmt, date: suppDate },
         { headers: { token: `Bearer ${user.accessToken}` } }
       );
-      setSupplementLog(res.data.supplementLog.sort(compare));
-      setSupplement('');
-      setSuppAmt('');
-      setSuppDate('');
+      console.log('Supplement response:', res.data);
+      if (res.data && res.data.supplementLog) {
+        setSupplementLog(res.data.supplementLog.sort(compare));
+        setSupplement('');
+        setSuppAmt('');
+        setSuppDate('');
+        alert('Supplement entry added successfully!');
+      }
     } catch (error) {
-      console.error(error);
+      console.error('Error adding supplement:', error);
+      alert('Error adding supplement entry: ' + (error.response?.data?.error || error.message));
     }
   };
 
@@ -690,7 +725,11 @@ const OtherHealthTracker = () => {
       <Navbar />
       
       <div className="canvas-background">
-        <Canvas camera={{ position: [0, 0, 5], fov: 50 }} dpr={[1, 1.5]}>
+        <Canvas 
+          camera={{ position: [0, 0, 5], fov: 50 }} 
+          dpr={[1, 1.5]}
+          gl={{ preserveDrawingBuffer: false, antialias: false }}
+        >
           <Scene3D activeTab={activeTab} />
         </Canvas>
       </div>

@@ -60,7 +60,6 @@ function Dumbbell3D({ position }) {
 function Scene3D() {
   return (
     <>
-      <color attach="background" args={['rgba(10, 0, 21, 0)']} />
       <ambientLight intensity={0.4} />
       <pointLight position={[10, 10, 10]} intensity={1.5} />
       <pointLight position={[-10, -10, -10]} intensity={1} />
@@ -122,27 +121,46 @@ const ExerciseTracker = () => {
   }, [userId, user.accessToken]);
 
   const handleAddExercise = async () => {
-    if (!exerciseName || !exerciseType) return;
+    if (!exerciseName || !exerciseType) {
+      alert('Please fill in exercise name and type');
+      return;
+    }
 
     try {
+      console.log('Adding exercise:', {
+        exerciseName: exerciseName,
+        sets: sets || 0,
+        reps: reps || 0,
+        time: time || 0,
+        exerciseType: exerciseType,
+        date: exerciseDate || new Date().toISOString()
+      });
+
       const res = await axios.put(
-        `users/exercise/${userId}`,
+        `users/addExercise/${userId}`,
         {
-          name: exerciseName,
+          exerciseName: exerciseName,
           sets: sets || 0,
           reps: reps || 0,
           time: time || 0,
-          type: exerciseType,
+          exerciseType: exerciseType,
           date: exerciseDate || new Date().toISOString()
         },
         { headers: { token: `Bearer ${user.accessToken}` } }
       );
 
-      const exercises = res.data.exerciseLog || [];
-      setAllExercises(exercises);
-      setLiftingExercises(exercises.filter(ex => ex.type === 'Weight Lifting'));
-      setCardioExercises(exercises.filter(ex => ex.type === 'Cardio'));
-      setOtherExercises(exercises.filter(ex => ex.type === 'Other'));
+      console.log('Exercise response:', res.data);
+
+      // Backend returns user object with separate logs
+      const liftingExercises = res.data.liftingLog || [];
+      const cardioExercises = res.data.cardioLog || [];
+      const otherExercises = res.data.otherExerciseLog || [];
+      const allExercises = [...liftingExercises, ...cardioExercises, ...otherExercises];
+
+      setAllExercises(allExercises);
+      setLiftingExercises(liftingExercises);
+      setCardioExercises(cardioExercises);
+      setOtherExercises(otherExercises);
 
       setExerciseName('');
       setSets('');
@@ -150,8 +168,11 @@ const ExerciseTracker = () => {
       setTime('');
       setExerciseType('');
       setExerciseDate('');
+      
+      alert('Exercise added successfully!');
     } catch (error) {
-      console.error(error);
+      console.error('Error adding exercise:', error);
+      alert('Error adding exercise: ' + (error.response?.data?.error || error.message));
     }
   };
 
@@ -184,7 +205,11 @@ const ExerciseTracker = () => {
       <Navbar />
       
       <div className="canvas-background">
-        <Canvas camera={{ position: [0, 0, 5], fov: 50 }} dpr={[1, 1.5]}>
+        <Canvas 
+          camera={{ position: [0, 0, 5], fov: 50 }} 
+          dpr={[1, 1.5]}
+          gl={{ preserveDrawingBuffer: false, antialias: false }}
+        >
           <Scene3D />
         </Canvas>
       </div>

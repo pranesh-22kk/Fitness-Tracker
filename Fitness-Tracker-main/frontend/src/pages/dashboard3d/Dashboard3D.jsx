@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Box, Grid, Card, CardContent, Typography, Button, Chip } from '@mui/material';
 import { motion } from 'framer-motion';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';

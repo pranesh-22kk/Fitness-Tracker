@@ -25,11 +25,14 @@ const ROUTES = {
     LOW_LEVEL_NUTRITION: '/lowLevelNutrition',
     RECOMMENDED_MENU_ITEMS: '/recommendedMenuItems',
     BMR_INFO: '/bmrInfo',
+    NUTRITION_GOALS: '/nutritionGoals',
+    DASHBOARD: '/dashboard',
     DASHBOARD_3D: '/dashboard3d',
+    WORKOUTS: '/workouts',
     WORKOUT_PLANNER: '/workoutPlanner',
     ACHIEVEMENTS: '/achievements',
+    PROGRESS: '/progress',
     PROGRESS_TRACKER: '/progressTracker'
-
 }
 
 export default ROUTES;

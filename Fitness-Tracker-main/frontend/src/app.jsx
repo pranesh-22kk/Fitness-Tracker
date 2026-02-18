@@ -1,11 +1,14 @@
 /* Root component of react app */
 import "./app.scss"
 import Home from "./pages/home/home";
+import AdvancedHome from "./pages/home/AdvancedHome";
 import Login from "./pages/login/login";
 import Register from "./pages/register/register";
+import AdvancedRegister from "./pages/register/AdvancedRegister";
 import Preferences from "./pages/preferences/preferences";
+import AdvancedPreferences from "./pages/preferences/AdvancedPreferences";
 import MealTracker from "./pages/mealTracker/mealTracker";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "./utils/authentication/auth-context";
 import ROUTES from "./routes";
@@ -21,10 +24,15 @@ import MealTrackerItem from "./pages/mealTrackerItem/mealTrackerItem";
 import SavedMenuItems from "./pages/savedMenuItems/savedMenuItems";
 import PopularMenuItems from "./pages/popular/popular";
 import LowLevelNutrition from "./pages/lowLevelNutrition/lowLevelNutrition";
+import AdvancedNutritionDetails from "./pages/lowLevelNutrition/AdvancedNutritionDetails";
 import RecommendedMenuItems from "./pages/recommendedMenuItems/recommendedMenuItems";
 import BmrInfo from "./pages/bmrInfo/bmrInfo";
+import AdvancedBmrCalculator from "./pages/bmrInfo/AdvancedBmrCalculator";
+import AdvancedNutritionGoals from "./pages/nutritionGoals/AdvancedNutritionGoals";
 import Dashboard3D from "./pages/dashboard3d/Dashboard3D";
+import AdvancedDashboard from "./pages/dashboard3d/AdvancedDashboard";
 import WorkoutPlanner from "./pages/workoutPlanner/WorkoutPlanner";
+import AdvancedWorkout from "./pages/workoutPlanner/AdvancedWorkout";
 import Achievements from "./pages/achievements/Achievements";
 import ProgressTracker from "./pages/progressTracker/ProgressTracker";
 
@@ -40,10 +48,10 @@ const App = () => {
     /* Page routes for when used is logged in. */
     const LOGGED_IN_ROUTES = (
         <>
-            <Route path={ROUTES.HOME} element={<Home />} />
-            <Route path={ROUTES.LOGIN} element={<Home />} />
-            <Route path={ROUTES.REGISTER} element={<Home />} />
-            <Route path={ROUTES.PREFERENCES} element={<Preferences />} />
+            <Route path={ROUTES.HOME} element={<AdvancedHome />} />
+            <Route path={ROUTES.LOGIN} element={<AdvancedHome />} />
+            <Route path={ROUTES.REGISTER} element={<AdvancedHome />} />
+            <Route path={ROUTES.PREFERENCES} element={<AdvancedPreferences />} />
             <Route path={ROUTES.SETTINGS} element={<Settings />} />
             <Route path={ROUTES.REPORT_PROBLEM} element={<ReportProblem />} />
             <Route path={ROUTES.PERSONAL_INFO} element={<PersonalInfo />} />
@@ -57,38 +65,45 @@ const App = () => {
             <Route path={ROUTES.MENU_INFO_LOCATION} element={<Menu />} />
             <Route path={ROUTES.SAVED_MENU_ITEMS} element={<SavedMenuItems />} />
             <Route path={ROUTES.POPULAR_MENU_ITEMS} element={<PopularMenuItems />} />
-            <Route path={ROUTES.LOW_LEVEL_NUTRITION} element={<LowLevelNutrition />} />
+            <Route path={ROUTES.LOW_LEVEL_NUTRITION} element={<AdvancedNutritionDetails />} />
             <Route path={ROUTES.RECOMMENDED_MENU_ITEMS} element={<RecommendedMenuItems />} />
-            <Route path={ROUTES.BMR_INFO} element={<BmrInfo />} />
-            <Route path={ROUTES.DASHBOARD_3D} element={<Dashboard3D />} />
-            <Route path={ROUTES.WORKOUT_PLANNER} element={<WorkoutPlanner />} />
+            <Route path={ROUTES.BMR_INFO} element={<AdvancedBmrCalculator />} />
+            <Route path={ROUTES.NUTRITION_GOALS} element={<AdvancedNutritionGoals />} />
+            <Route path={ROUTES.DASHBOARD} element={<AdvancedDashboard />} />
+            <Route path={ROUTES.DASHBOARD_3D} element={<AdvancedDashboard />} />
+            <Route path={ROUTES.WORKOUTS} element={<AdvancedWorkout />} />
+            <Route path={ROUTES.WORKOUT_PLANNER} element={<AdvancedWorkout />} />
             <Route path={ROUTES.ACHIEVEMENTS} element={<Achievements />} />
+            <Route path={ROUTES.PROGRESS} element={<ProgressTracker />} />
             <Route path={ROUTES.PROGRESS_TRACKER} element={<ProgressTracker />} />
+            <Route path={ROUTES.MENU_INFO} element={<Menu />} />
+            <Route path="/mealTracker/*" element={<Navigate to={ROUTES.MEAL_TRACKER} replace />} />
+            <Route path="*" element={<Navigate to={ROUTES.HOME} replace />} />
         </>
     );
 
     /* Page routes for when used is logged out. */
     const LOGGED_OUT_ROUTES = (
         <>
-            <Route path={ROUTES.HOME} element={<Register />} />
+            <Route path={ROUTES.HOME} element={<AdvancedHome />} />
             <Route path={ROUTES.LOGIN} element={<Login />} />
-            <Route path={ROUTES.REGISTER} element={<Register />} />
-            <Route path={ROUTES.PREFERENCES} element={<Register />} />
-            <Route path={ROUTES.SETTINGS} element={<Register />} />
-            <Route path={ROUTES.REPORT_PROBLEM} element={<Register />} />
-            <Route path={ROUTES.PERSONAL_INFO} element={<Register />} />
-            <Route path={ROUTES.MEAL_TRACKER} element={<Register />} />
-            <Route path={ROUTES.EXERCISE_TRACKER} element={<Register />} />
-            <Route path={ROUTES.FOOD_ITEM_INFO} element={<Register />} />
-            <Route path={ROUTES.EXERCISE_INFO} element={<Register />} />
+            <Route path={ROUTES.REGISTER} element={<AdvancedRegister />} />
+            <Route path={ROUTES.PREFERENCES} element={<AdvancedRegister />} />
+            <Route path={ROUTES.SETTINGS} element={<AdvancedRegister />} />
+            <Route path={ROUTES.REPORT_PROBLEM} element={<AdvancedRegister />} />
+            <Route path={ROUTES.PERSONAL_INFO} element={<AdvancedRegister />} />
+            <Route path={ROUTES.MEAL_TRACKER} element={<AdvancedRegister />} />
+            <Route path={ROUTES.EXERCISE_TRACKER} element={<AdvancedRegister />} />
+            <Route path={ROUTES.FOOD_ITEM_INFO} element={<AdvancedRegister />} />
+            <Route path={ROUTES.EXERCISE_INFO} element={<AdvancedRegister />} />
             <Route path={ROUTES.OTHER_HEALTH_TRACKER} element={<OtherHealthTracker />} />
-            <Route path={ROUTES.FOOD_INFO} element={<Register />} />
-            <Route path={ROUTES.FOOD_INFO_MENU_ITEM_ID} element={<Register />} />
-            <Route path={ROUTES.MENU_INFO_LOCATION} element={<Register />} />
-            <Route path={ROUTES.SAVED_MENU_ITEMS} element={<Register />} />
-            <Route path={ROUTES.POPULAR_MENU_ITEMS} element={<Register />} />
-            <Route path={ROUTES.LowLevelNutrition} element={<Register />} />
-            <Route path={ROUTES.RECOMMENDED_MENU_ITEMS} element={<Register />} />
+            <Route path={ROUTES.FOOD_INFO} element={<AdvancedRegister />} />
+            <Route path={ROUTES.FOOD_INFO_MENU_ITEM_ID} element={<AdvancedRegister />} />
+            <Route path={ROUTES.MENU_INFO_LOCATION} element={<AdvancedRegister />} />
+            <Route path={ROUTES.SAVED_MENU_ITEMS} element={<AdvancedRegister />} />
+            <Route path={ROUTES.POPULAR_MENU_ITEMS} element={<AdvancedRegister />} />
+            <Route path={ROUTES.LowLevelNutrition} element={<AdvancedRegister />} />
+            <Route path={ROUTES.RECOMMENDED_MENU_ITEMS} element={<AdvancedRegister />} />
             <Route path={ROUTES.BMR_INFO} element={<BmrInfo />} />
         </>
     );

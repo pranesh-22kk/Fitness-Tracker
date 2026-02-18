@@ -207,6 +207,7 @@ export default function Register() {
                     />
                     {!clickedGetStarted && ( // hide this button when user clicks on next
                         <button
+                            type="button"
                             className="registerButton"
                             onClick={handleGetStarted}
                         >Get Started</button>
@@ -227,7 +228,7 @@ export default function Register() {
                         }}
                         onKeyDown={(e) => e.key === 'Enter' && handleGetStarted(e)}
                     />
-                    <button onClick={handleRegister} style={{ visibility: "hidden" }}>Sign Up</button>
+                    <button type="button" onClick={handleRegister} style={{ visibility: "hidden" }}>Sign Up</button>
                 </div>
 
                 { // only display when user clicks get started
@@ -247,7 +248,7 @@ export default function Register() {
                             onChange={(e) => setPassword(e.target.value)}
                             onKeyDown={(e) => e.key === 'Enter' && handleRegister(e)}
                         />
-                        <button className="termsButton" onClick={handleShowTerms}>Terms and Conditions</button>
+                        <button type="button" className="termsButton" onClick={handleShowTerms}>Terms and Conditions</button>
                     </form>
                     
                 }
@@ -256,7 +257,7 @@ export default function Register() {
                         className="input"
                         style={{ visibility: !clickedGetStarted && "hidden" }}
                     >
-                        <button className="registerButton" onClick={handleRegister}>Sign Up</button>
+                        <button type="button" className="registerButton" onClick={handleRegister}>Sign Up</button>
                         
                     </form>
                     
@@ -288,7 +289,7 @@ export default function Register() {
                                  {"I have read and agreed to the terms and conditions."}
                             </span>
                             
-                            <button className="backButton" onClick={handleShowTerms}>Back</button>
+                            <button type="button" className="backButton" onClick={handleShowTerms}>Back</button>
                         </form>
                     </div>
                 </div>

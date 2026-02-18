@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const axios = require("axios");
 const express = require("express");
+const cors = require("cors");
 const schedule = require("node-schedule");
 
 /* Create instance of app */
@@ -33,6 +34,14 @@ mongoose
     })
     .then(() => console.log("Successfully connected to MongoDB."))
     .catch(err => console.log(err));
+
+/* Enable CORS for frontend communication */
+app.use(cors({
+    origin: ["http://localhost:3000", "http://localhost:3001"],
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+    allowedHeaders: ["Content-Type", "Authorization", "token"]
+}));
 
 /* Use express middleware to parse requests from frontend */
 app.use(express.json());

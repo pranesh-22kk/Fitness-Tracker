@@ -1,7 +1,7 @@
 /* Modern Meal Tracker with 3D UI */
 import Navbar from "../../components/navbar/navbar";
 import "./mealTracker.scss";
-import { useContext, useState, useEffect, useRef } from "react";
+import { useContext, useState, useEffect, useRef, useMemo } from "react";
 import { AuthContext } from "../../utils/authentication/auth-context";
 import { useLocation, Link } from "react-router-dom";
 import axios from "axios";
@@ -20,10 +20,11 @@ import {
   MenuItem,
   FormControl,
   InputLabel,
-  Divider
+  Divider,
+  TextField
 } from "@mui/material";
 import { PieChart } from "@mui/x-charts/PieChart";
-import { FiCoffee, FiSun, FiMoon, FiApple, FiPlus, FiInfo } from 'react-icons/fi';
+import { FiCoffee, FiSun, FiMoon, FiPlus } from 'react-icons/fi';
 import ROUTES from "../../routes";
 
 // 3D Food Sphere
@@ -67,7 +68,6 @@ function FoodSphere({ mealType, position }) {
 function Scene3D() {
   return (
     <>
-      <color attach="background" args={['rgba(10, 0, 21, 0)']} />
       <ambientLight intensity={0.4} />
       <pointLight position={[10, 10, 10]} intensity={1.5} />
       <pointLight position={[-10, -10, -10]} intensity={1} />
@@ -104,12 +104,12 @@ const MealTracker = () => {
 
   const getFoodItems = async () => {
     try {
-      const res = await axios.get(`users/food/${user._id}`, {
+      const res = await axios.get(`users/allFoods/${user._id}`, {
         headers: { token: `Bearer ${user.accessToken}` }
       });
       setFoodItems(res.data || []);
     } catch (error) {
-      console.error(error);
+      console.error('Error fetching food items:', error);
     }
   };
 
@@ -125,8 +125,8 @@ const MealTracker = () => {
       case 'breakfast': return <FiCoffee />;
       case 'lunch': return <FiSun />;
       case 'dinner': return <FiMoon />;
-      case 'snack': return <FiApple />;
-      default: return <FiApple />;
+      case 'snack': return <FiPlus />;
+      default: return <FiCoffee />;
     }
   };
 
@@ -167,15 +167,24 @@ const MealTracker = () => {
     { label: 'Fat', value: totalNutrition.fat, color: '#ffd93d' }
   ].filter(item => item.value > 0);
 
+  // Memoize the 3D Canvas to prevent re-renders
+  const canvas3D = useMemo(() => (
+    <div className="canvas-background">
+      <Canvas 
+        camera={{ position: [0, 0, 5], fov: 50 }} 
+        dpr={[1, 1.5]}
+        gl={{ preserveDrawingBuffer: false, antialias: false }}
+      >
+        <Scene3D />
+      </Canvas>
+    </div>
+  ), []);
+
   return (
     <div className="meal-tracker">
       <Navbar />
       
-      <div className="canvas-background">
-        <Canvas camera={{ position: [0, 0, 5], fov: 50 }} dpr={[1, 1.5]}>
-          <Scene3D />
-        </Canvas>
-      </div>
+      {canvas3D}
 
       <div className="content-container">
         <motion.div

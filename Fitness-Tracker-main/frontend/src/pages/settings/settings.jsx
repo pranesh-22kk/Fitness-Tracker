@@ -49,7 +49,7 @@ function Gear3D({ position, speed = 1 }) {
 function Scene3D() {
   return (
     <>
-      <color attach="background" args={['rgba(10, 0, 21, 0)']} />
+
       <ambientLight intensity={0.4} />
       <pointLight position={[10, 10, 10]} intensity={1.5} />
       <pointLight position={[-10, -10, -10]} intensity={1} />
@@ -135,7 +135,11 @@ const Settings = () => {
       <Navbar />
       
       <div className="canvas-background">
-        <Canvas camera={{ position: [0, 0, 5], fov: 50 }} dpr={[1, 1.5]}>
+        <Canvas 
+          camera={{ position: [0, 0, 5], fov: 50 }} 
+          dpr={[1, 1.5]}
+          gl={{ preserveDrawingBuffer: false, antialias: false }}
+        >
           <Scene3D />
         </Canvas>
       </div>

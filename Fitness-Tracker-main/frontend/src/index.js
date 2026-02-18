@@ -4,6 +4,10 @@ import ReactDOM from 'react-dom/client';
 import App from './app';
 import '@fontsource/public-sans';
 import { AuthContextProvider } from './utils/authentication/auth-context';
+import axios from 'axios';
+
+/* Configure axios base URL for API calls */
+axios.defaults.baseURL = 'http://localhost:8000/api/';
 
 /* Render react root */
 const root = document.getElementById('root');

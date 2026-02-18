@@ -1,0 +1,431 @@
+/* Advanced Nutrition Details - Complete UI Redesign */
+
+.advanced-nutrition-details {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #1e1b4b 100%);
+  position: relative;
+  overflow-x: hidden;
+  padding-bottom: 80px;
+
+  /* 3D Canvas Background */
+  .canvas-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    opacity: 0.6;
+  }
+
+  .nutrition-details-container {
+    position: relative;
+    z-index: 1;
+    padding-top: 120px;
+  }
+
+  /* Header Section */
+  .header {
+    text-align: center;
+    margin-bottom: 40px;
+
+    .icon-container {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 120px;
+      height: 120px;
+      background: linear-gradient(135deg, rgba(167, 139, 250, 0.25), rgba(139, 92, 246, 0.25));
+      border-radius: 50%;
+      margin-bottom: 24px;
+      animation: iconGlow 4s ease-in-out infinite;
+      backdrop-filter: blur(12px);
+      border: 3px solid rgba(167, 139, 250, 0.5);
+      box-shadow: 0 0 50px rgba(167, 139, 250, 0.4);
+    }
+
+    .title {
+      font-size: 3.5rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, #a78bfa 0%, #34d399 50%, #fbbf24 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 16px;
+      text-shadow: 0 0 50px rgba(167, 139, 250, 0.5);
+    }
+
+    .subtitle {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 1.2rem;
+      font-weight: 300;
+    }
+  }
+
+  /* Glass Card Base */
+  .glass-card {
+    background: rgba(255, 255, 255, 0.05) !important;
+    backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 32px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Tabs Container */
+  .tabs-container {
+    margin-bottom: 32px;
+
+    .custom-tabs {
+      .MuiTab-root {
+        color: rgba(255, 255, 255, 0.6);
+        font-weight: 600;
+        font-size: 1rem;
+        text-transform: none;
+        min-height: 70px;
+        transition: all 0.3s ease;
+
+        &:hover {
+          color: rgba(255, 255, 255, 0.9);
+          background: rgba(255, 255, 255, 0.05);
+        }
+
+        &.Mui-selected {
+          color: #a78bfa;
+          background: linear-gradient(135deg, rgba(167, 139, 250, 0.15), rgba(139, 92, 246, 0.15));
+        }
+
+        .MuiSvgIcon-root {
+          margin-bottom: 8px;
+          font-size: 28px;
+        }
+      }
+
+      .MuiTabs-indicator {
+        height: 4px;
+        background: linear-gradient(90deg, #a78bfa, #8b5cf6);
+        border-radius: 4px;
+      }
+    }
+  }
+
+  /* Loading Container */
+  .loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 400px;
+
+    .MuiCircularProgress-root {
+      color: #a78bfa;
+    }
+  }
+
+  /* Nutrient Card */
+  .nutrient-card {
+    background: rgba(255, 255, 255, 0.06) !important;
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: visible;
+
+    &:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .MuiCardContent-root {
+      padding: 28px;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+
+      .title-section {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+
+        .MuiSvgIcon-root {
+          font-size: 32px;
+        }
+      }
+
+      .nutrient-title {
+        color: rgba(255, 255, 255, 0.95);
+        font-weight: 700;
+      }
+
+      .edit-btn, .save-btn, .cancel-btn {
+        color: rgba(255, 255, 255, 0.7);
+        transition: all 0.3s ease;
+
+        &:hover {
+          color: rgba(255, 255, 255, 1);
+          background: rgba(255, 255, 255, 0.1);
+        }
+      }
+
+      .save-btn {
+        color: #34d399;
+      }
+
+      .cancel-btn {
+        color: #ef4444;
+      }
+
+      .action-buttons {
+        display: flex;
+        gap: 8px;
+      }
+    }
+
+    .nutrient-value {
+      font-size: 3.5rem;
+      font-weight: 900;
+      color: white;
+      margin: 20px 0;
+      text-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+
+      .unit {
+        font-size: 1.5rem;
+        font-weight: 600;
+        opacity: 0.7;
+        margin-left: 8px;
+      }
+    }
+
+    .edit-input {
+      margin: 20px 0;
+
+      .MuiOutlinedInput-root {
+        color: white;
+
+        fieldset {
+          border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        &:hover fieldset {
+          border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        &.Mui-focused fieldset {
+          border-color: #a78bfa;
+        }
+      }
+
+      .MuiInputBase-input {
+        font-size: 1.5rem;
+        font-weight: 700;
+      }
+    }
+
+    .progress-section {
+      margin-top: 20px;
+      margin-bottom: 12px;
+
+      .progress-bar {
+        height: 8px;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.1);
+
+        &.low .MuiLinearProgress-bar {
+          background: linear-gradient(90deg, #ef4444, #dc2626);
+        }
+
+        &.good .MuiLinearProgress-bar {
+          background: linear-gradient(90deg, #34d399, #10b981);
+        }
+
+        &.high .MuiLinearProgress-bar {
+          background: linear-gradient(90deg, #fbbf24, #f59e0b);
+        }
+      }
+
+      .percentage {
+        display: block;
+        text-align: right;
+        color: rgba(255, 255, 255, 0.7);
+        margin-top: 8px;
+        font-weight: 600;
+      }
+    }
+
+    .status-chip {
+      margin-top: 12px;
+
+      .chip-low {
+        background: rgba(239, 68, 68, 0.2) !important;
+        color: #fca5a5 !important;
+        border: 1px solid rgba(239, 68, 68, 0.4);
+      }
+
+      .chip-good {
+        background: rgba(52, 211, 153, 0.2) !important;
+        color: #6ee7b7 !important;
+        border: 1px solid rgba(52, 211, 153, 0.4);
+      }
+
+      .chip-high {
+        background: rgba(251, 191, 36, 0.2) !important;
+        color: #fde047 !important;
+        border: 1px solid rgba(251, 191, 36, 0.4);
+      }
+    }
+
+    /* Color Themes for Different Nutrients */
+    &.fire {
+      background: linear-gradient(135deg, rgba(255, 107, 53, 0.08), rgba(255, 169, 77, 0.08)) !important;
+      border-color: rgba(255, 107, 53, 0.3);
+
+      .icon-fire { color: #ff6b35; }
+      .nutrient-value { color: #ffa94d; }
+    }
+
+    &.protein {
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.08), rgba(220, 38, 38, 0.08)) !important;
+      border-color: rgba(239, 68, 68, 0.3);
+
+      .icon-protein { color: #ef4444; }
+      .nutrient-value { color: #fca5a5; }
+    }
+
+    &.carbs {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(37, 99, 235, 0.08)) !important;
+      border-color: rgba(59, 130, 246, 0.3);
+
+      .icon-carbs { color: #3b82f6; }
+      .nutrient-value { color: #93c5fd; }
+    }
+
+    &.fat {
+      background: linear-gradient(135deg, rgba(234, 179, 8, 0.08), rgba(202, 138, 4, 0.08)) !important;
+      border-color: rgba(234, 179, 8, 0.3);
+
+      .icon-fat { color: #eab308; }
+      .nutrient-value { color: #fde047; }
+    }
+
+    &.fiber {
+      background: linear-gradient(135deg, rgba(34, 197, 94, 0.08), rgba(22, 163, 74, 0.08)) !important;
+      border-color: rgba(34, 197, 94, 0.3);
+
+      .icon-fiber { color: #22c55e; }
+      .nutrient-value { color: #86efac; }
+    }
+
+    &.sugar {
+      background: linear-gradient(135deg, rgba(244, 114, 182, 0.08), rgba(236, 72, 153, 0.08)) !important;
+      border-color: rgba(244, 114, 182, 0.3);
+
+      .icon-sugar { color: #f472b6; }
+      .nutrient-value { color: #fbcfe8; }
+    }
+
+    &.vitamin-a, &.vitamin-c, &.vitamin-d, &.vitamin-e, &.vitamin-k, &.vitamin-b12 {
+      background: linear-gradient(135deg, rgba(167, 139, 250, 0.08), rgba(139, 92, 246, 0.08)) !important;
+      border-color: rgba(167, 139, 250, 0.3);
+
+      .MuiSvgIcon-root { color: #a78bfa; }
+      .nutrient-value { color: #c4b5fd; }
+    }
+
+    &.calcium, &.iron, &.magnesium, &.potassium, &.sodium, &.zinc {
+      background: linear-gradient(135deg, rgba(14, 165, 233, 0.08), rgba(2, 132, 199, 0.08)) !important;
+      border-color: rgba(14, 165, 233, 0.3);
+
+      .MuiSvgIcon-root { color: #0ea5e9; }
+      .nutrient-value { color: #7dd3fc; }
+    }
+
+    &.water {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.08), rgba(14, 165, 233, 0.08)) !important;
+      border-color: rgba(56, 189, 248, 0.3);
+
+      .icon-water { color: #38bdf8; }
+      .nutrient-value { color: #7dd3fc; }
+    }
+
+    &.cholesterol {
+      background: linear-gradient(135deg, rgba(251, 113, 133, 0.08), rgba(244, 63, 94, 0.08)) !important;
+      border-color: rgba(251, 113, 133, 0.3);
+
+      .icon-cholesterol { color: #fb7185; }
+      .nutrient-value { color: #fecdd3; }
+    }
+  }
+}
+
+/* Animations */
+@keyframes iconGlow {
+  0%, 100% {
+    box-shadow: 0 0 50px rgba(167, 139, 250, 0.4);
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    box-shadow: 0 0 80px rgba(167, 139, 250, 0.6);
+    transform: translateY(-10px) scale(1.05);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 960px) {
+  .advanced-nutrition-details {
+    .header .title {
+      font-size: 2.5rem;
+    }
+
+    .nutrient-card .nutrient-value {
+      font-size: 2.5rem;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .advanced-nutrition-details {
+    .nutrition-details-container {
+      padding-top: 100px;
+    }
+
+    .header {
+      .icon-container {
+        width: 90px;
+        height: 90px;
+
+        svg {
+          font-size: 50px !important;
+        }
+      }
+
+      .title {
+        font-size: 2rem;
+      }
+
+      .subtitle {
+        font-size: 1rem;
+      }
+    }
+
+    .nutrient-card {
+      .MuiCardContent-root {
+        padding: 20px;
+      }
+
+      .nutrient-value {
+        font-size: 2rem !important;
+
+        .unit {
+          font-size: 1rem;
+        }
+      }
+    }
+  }
+}
