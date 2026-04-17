@@ -1,0 +1,114 @@
+.data-card {
+  position: relative;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color-light);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: all var(--transition-normal);
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+    opacity: 0;
+    transition: opacity var(--transition-normal);
+    pointer-events: none;
+  }
+  
+  &:hover {
+    border-color: var(--border-color-medium);
+    box-shadow: var(--shadow-md);
+    
+    &::before {
+      opacity: 1;
+    }
+  }
+  
+  // Variants
+  &--default {
+    padding: 1.5rem;
+  }
+  
+  &--elevated {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-color-medium);
+    box-shadow: var(--shadow-md);
+    
+    &:hover {
+      box-shadow: var(--shadow-lg);
+    }
+  }
+  
+  &--glass {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+  
+  &--gradient {
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+  }
+}
+
+.data-card__header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-color-light);
+}
+
+.data-card__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--accent-primary);
+}
+
+.data-card__title {
+  margin: 0;
+  font-size: var(--text-lg);
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+  flex: 1;
+}
+
+.data-card__action {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.data-card__content {
+  position: relative;
+  z-index: 1;
+  min-height: 60px;
+}
+
+.data-card__footer {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color-light);
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .data-card {
+    &--default {
+      padding: 1.25rem;
+    }
+  }
+  
+  .data-card__header {
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.75rem;
+  }
+}

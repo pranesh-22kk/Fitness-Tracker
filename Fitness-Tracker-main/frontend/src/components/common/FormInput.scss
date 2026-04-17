@@ -1,0 +1,112 @@
+.form-input-group {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-input__label {
+  display: block;
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.form-input__required {
+  color: var(--accent-danger);
+  margin-left: 0.25rem;
+}
+
+.form-input__wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0 1rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color-light);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-normal);
+  
+  &:hover:not(.form-input__wrapper--error) {
+    border-color: var(--border-color-medium);
+  }
+  
+  &.form-input__wrapper--focused {
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  }
+  
+  &.form-input__wrapper--error {
+    border-color: var(--accent-danger);
+    
+    &.form-input__wrapper--focused {
+      box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.1);
+    }
+  }
+}
+
+.form-input__icon {
+  color: var(--text-secondary);
+  flex-shrink: 0;
+  transition: color var(--transition-normal);
+}
+
+.form-input__wrapper.form-input__wrapper--focused .form-input__icon {
+  color: var(--accent-primary);
+}
+
+.form-input__input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  font-size: var(--text-base);
+  font-family: var(--font-family);
+  padding: 0.75rem 0;
+  outline: none;
+  
+  &::placeholder {
+    color: var(--text-muted);
+  }
+  
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  // Autofill styling
+  &:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px var(--bg-secondary) inset;
+    -webkit-text-fill-color: var(--text-primary);
+  }
+  
+  &:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 1000px var(--bg-secondary) inset;
+  }
+}
+
+.form-input__error {
+  display: block;
+  font-size: var(--text-xs);
+  color: var(--accent-danger);
+  font-weight: var(--font-medium);
+}
+
+.form-input__help {
+  display: block;
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .form-input__wrapper {
+    padding: 0 0.75rem;
+  }
+  
+  .form-input__input {
+    font-size: 16px; // Prevent zoom on iOS
+  }
+}
