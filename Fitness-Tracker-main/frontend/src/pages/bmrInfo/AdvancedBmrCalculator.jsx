@@ -1,4 +1,4 @@
-/* Advanced 3D BMR Calculator with Nutrition Goal */
+/* Advanced 3D BMR Calculator with Nutrition Goals */
 import React, { useState, useContext, useRef } from 'react';
 import { Canvas, useFrame } from "@react-three/fiber";
 import {
