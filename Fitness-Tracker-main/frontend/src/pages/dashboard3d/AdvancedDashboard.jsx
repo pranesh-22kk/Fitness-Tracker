@@ -1,4 +1,4 @@
-/* Advanced 3D Dashboard with Full Backend Integration */
+/* Advanced 3D Dashboard with Full Backend Integrations */
 import React, { useState, useEffect, useContext, useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { 
