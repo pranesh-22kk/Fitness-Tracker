@@ -6,8 +6,7 @@ const express = require("express");
 const cors = require("cors");
 const schedule = require("node-schedule");
 
-/* Create instance of app */
-const app = express();
+const app =express();
 
 /* Define REST API endpoint routes */
 const authenticationRoute = require("./routes/auth");
