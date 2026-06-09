@@ -103,7 +103,7 @@ const App = () => {
     );
 
     /* Return react component */
-    return (
+    return(
         <Router>
             <Routes>
                 {user ? LOGGED_IN_ROUTES : LOGGED_OUT_ROUTES}
