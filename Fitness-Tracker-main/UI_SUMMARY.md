@@ -6,7 +6,7 @@ Your Fitness Tracker has received a comprehensive UI overhaul with modern design
 
 ---
 
-## ✨ Key Improvements
+## Key Improvement
 
 ### 1. **Design System & Tokens** 📐
 - **Color Palette**: Curated colors for primary, secondary, success, warning, danger, and info states
